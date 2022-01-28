@@ -1,0 +1,9 @@
+flask
+
+web3
+
+requests
+
+wtforms
+
+flask_cors
