@@ -10,7 +10,21 @@ import { message } from "antd";
 import { Mainnet, useEtherBalance, useEthers, Config } from '@usedapp/core'
 import { formatEther } from '@ethersproject/units'
 import middleware from "../middleware/Middleware";
+import detectEthereumProvider from '@metamask/detect-provider';
 
+if (window.ethereum) {
+   handleEthereum(); 
+  } else { 
+    window.addEventListener('ethereum#initialized', handleEthereum, { once: true, }); 
+    setTimeout(handleEthereum, 3000);}
+    function handleEthereum(){
+      const{ethereum}=window;
+      if(ethereum && ethereum.isMetaMask){
+//has metamask
+      } else {
+        //doesn't have metamask
+      }
+    }
 export const LoginScreen = () => {
   const [id, setID] = useState("");
   const { activateBrowserWallet, account } = useEthers()
@@ -67,7 +81,7 @@ export const LoginScreen = () => {
               prefix={<UserOutlined />}
             />
             <br />
-            <Button onClick={() => {activateBrowserWallet();  middleware.setAccount(account)}} type="primary">
+            <Button onClick={() => { activateBrowserWallet(); middleware.setAccount(account) }} type="primary">
               Sign in with Metamask
             </Button>
           </div>
