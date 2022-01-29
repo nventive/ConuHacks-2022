@@ -1,8 +1,27 @@
-# Voting System using Smart contract
+# ConuHacks 2022 Challenge. Decentralized Election Platform
 
+![image](https://user-images.githubusercontent.com/7029537/151643230-170bedd3-71b7-4d22-8663-ae325affa348.png)
+
+## Objective
+Build a decentralized election platform everyone in the galaxy would use to vote.
 > This is a decentralized voting system based on Blockchain technology, which is distributed over a network using smart contracts.
 
-## Setup
+## Guidelines
+- This github repo contains a full README to help you get started (see below) and a fully functional smart contract with voting capabilities, it's a good starting point! Use it or start from scratch, your choice!
+- Try to follow the theme
+- Have fun with it! Try things.
+- Provide a submission video (showcase) showing what you built, you should also present your ideas for future improvements.
+- Come hang out in the Gathertown (nventive, in career fair section), we have debug rooms where developers can help you get started!
+
+## Ideas of things to add/improve
+> don't limit yourself to this list
+- Improve the way to identify yourself, possibly via metamask.
+- Improve overall security of the React app and smart contract
+- Improve the UX/UI, make it easy to vote for everyone
+- Integrate your smart contract in the Ropsten test network
+
+# README
+## Getting Started - Setup
 
 ### _Additionnal step on Windows_:
 
