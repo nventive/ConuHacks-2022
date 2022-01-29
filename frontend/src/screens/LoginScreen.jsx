@@ -7,9 +7,13 @@ import { url } from "../globalUrl";
 import "./Login.css";
 import nventiveLogo from "../images/nventive.jpeg";
 import { message } from "antd";
+import { Mainnet, useEtherBalance, useEthers, Config } from '@usedapp/core'
+import { formatEther } from '@ethersproject/units'
+import middleware from "../middleware/Middleware";
 
 export const LoginScreen = () => {
   const [id, setID] = useState("");
+  const { activateBrowserWallet, account } = useEthers()
 
   let navigate = useNavigate();
 
@@ -63,8 +67,8 @@ export const LoginScreen = () => {
               prefix={<UserOutlined />}
             />
             <br />
-            <Button onClick={submitHandle} type="primary">
-              Sign in
+            <Button onClick={() => {activateBrowserWallet();  middleware.setAccount(account)}} type="primary">
+              Sign in with Metamask
             </Button>
           </div>
         </div>
