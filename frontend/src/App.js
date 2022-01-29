@@ -6,7 +6,7 @@ import Results from "./screens/ResultsScreen";
 import Voted from "./screens/VotedScreen";
 import Admin from "./screens/AdminLoginScreen";
 import AdminDashboard from "./screens/AdminDashboardScreen";
-
+//testign commits
 function App() {
   return (
     <>
