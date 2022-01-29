@@ -27,8 +27,12 @@ export const LoginScreen = () => {
         if (response["status"] === 201 || response["status"] === 200) {
           message.success("Logged in successfully!");
           return response.json();
-        } else if (response["status"] === 401) {
+        } else if (response["status"] === 403) {
           message.error("You already voted!");
+        } else if (response["status"] === 401) {
+          message.error(
+            "No ETH account associated with this identification number."
+          );
         } else {
           message.error("The election is closed!");
         }
