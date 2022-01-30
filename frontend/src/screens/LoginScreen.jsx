@@ -42,6 +42,7 @@ export const LoginScreen = () => {
 
   const onError = (error: Error) => {
     console.log(error.message)
+
   }
 
   return (
