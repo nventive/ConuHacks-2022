@@ -4,12 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
-import { DAppProvider } from "@usedapp/core";
+import { DAppProvider, Ropsten} from "@usedapp/core";
+
+const config = {
+    readOnlyChainId: Ropsten.chainId,
+    readOnlyUrls: {
+        [Ropsten.chainId]: 'https://eth-ropsten.alchemyapi.io/v2/7SXH-5Awi-PXwykyzs82zwSjysQePayV',
+    },
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-        <DAppProvider config={{}}>
+        <DAppProvider config={config}>
             <App />
         </DAppProvider>
     </BrowserRouter>

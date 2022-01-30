@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Candidates.css";
 import empireIcon from "../images/empire.jpg";
@@ -7,6 +7,11 @@ import "antd/dist/antd.css";
 import { Popconfirm, message } from "antd";
 import { url } from "../globalUrl";
 import { Spin } from "antd";
+import { utils } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
+import { useContractCall, useContractFunction } from '@usedapp/core'
+import abi from "../smartContract/abi.json"
+import { address } from "../smartContract/address"
 
 export const partyIcons = {
   empire: empireIcon,
@@ -19,56 +24,29 @@ export const partyNames = {
 };
 
 export const CandidatesScreen = () => {
-  const [candidates, setCandidates] = useState([]);
-  const [voterId, setVoterId] = useState();
-
   const navigate = useNavigate();
-  const { state } = useLocation();
-  useEffect(() => {
-    if (state) {
-      setVoterId(state.id);
-    }
-  }, [state]);
 
-  useEffect(() => {
-    fetch(url + "/results", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setCandidates(result);
-      });
-  }, []);
+  const wethInterface = new utils.Interface(abi)
+  const wethContractAddress = address
+  const contract = new Contract(wethContractAddress, wethInterface)
+
+  const [candidates] = useContractCall({
+    abi: wethInterface,
+    address: wethContractAddress,
+    method: "retrieveCandidates",
+    args: [],
+  }) ?? [];
+
+  const { send } = useContractFunction(contract, 'vote')
 
   function confirm(can_id) {
-    let id = voterId;
-    let cid = can_id + 1;
-
-    const data = {
-      voterID: parseInt(id),
-      candidateID: cid,
-    };
-
-    fetch(url + "/vote", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-      body: JSON.stringify(data),
-    }).then((response) => {
-      console.log(response);
-      if (response["status"] === 201 || response["status"] === 200) {
-        navigate("/Voted");
-        return response.json();
-      } else {
-        message.error("Already Voted!");
-      }
-    });
+    try {
+      send(can_id + 1);
+      navigate("/Voted");
+    } catch (e) {
+      message.error("Already Voted!");
+      navigate("/");
+    }
   }
 
   function cancel(e) {
@@ -99,7 +77,7 @@ export const CandidatesScreen = () => {
                 style={{ justifyContent: "flex-end" }}
               ></div>
             </div>
-            {candidates.length === 0 ? (
+            {!candidates || candidates.length === 0 ? (
               <div className="spinner">
                 <Spin size="large" />
               </div>
@@ -128,7 +106,7 @@ export const CandidatesScreen = () => {
                       <Popconfirm
                         title="Are you sure to vote this candidate?"
                         onConfirm={() => confirm(index)}
-                        onCancel={cancel}
+                        onCancel={()=> {console.log(index);cancel()}}
                         okText="Yes"
                         cancelText="No"
                         placement="left"

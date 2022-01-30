@@ -7,35 +7,30 @@ import { url } from "../globalUrl";
 import "./Login.css";
 import { message } from "antd";
 import admin from "../images/admin.jpg";
+import { utils } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
+import { Mainnet, useEtherBalance, useEthers, Config, useContractCall, useContractFunction} from '@usedapp/core'
+import abi from "../smartContract/abi.json"
+import { address } from "../smartContract/address"
 
 export const AdminLoginScreen = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
   let navigate = useNavigate();
+  const { activateBrowserWallet, account } = useEthers()
+  const wethInterface = new utils.Interface(abi)
+  const wethContractAddress = address
+  const contract = new Contract(wethContractAddress, wethInterface)
+  const { send } = useContractFunction(contract, 'isAdmin')
 
   function submitHandle() {
-    const data = {
-      username: username,
-      password: password,
-    };
-
-    fetch(url + "/admin-login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-      body: JSON.stringify(data),
-    }).then((response) => {
-      if (response["status"] === 201 || response["status"] === 200) {
-        message.success("Login Successfully!");
-        navigate("/admin-dashboard");
-        return response.json();
-      } else {
-        message.error("Wrong Username or Password!");
-      }
+    activateBrowserWallet(onError, true).then(() => {
+      send();
+    }).then(() => {
+      navigate("/admin-dashboard");
     });
+  }
+
+  const onError = (error: Error) => {
+    console.log(error.message)
   }
 
   return (
@@ -52,24 +47,6 @@ export const AdminLoginScreen = () => {
             </div>
             <h2>Login</h2>
 
-            <Input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              size="large"
-              placeholder="Enter your username"
-              prefix={<UserOutlined />}
-            />
-            <br />
-
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              size="large"
-              placeholder="Enter your password"
-              prefix={<UserOutlined />}
-            />
             <br />
             <Button onClick={submitHandle} type="primary">
               Sign in

@@ -11,7 +11,6 @@ import deathstar from "../images/sw_deathstar.png";
 import { message } from "antd";
 import { Mainnet, useEtherBalance, useEthers, Config } from '@usedapp/core'
 import { formatEther } from '@ethersproject/units'
-import middleware from "../middleware/Middleware";
 import detectEthereumProvider from '@metamask/detect-provider';
 
 
@@ -36,30 +35,13 @@ export const LoginScreen = () => {
   let navigate = useNavigate();
 
   function submitHandle() {
-    fetch(url + "/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-      body: JSON.stringify({ id }),
-    })
-        .then((response) => {
-          console.log(response);
-          if (response["status"] === 201 || response["status"] === 200) {
-            message.success("Logged in successfully!");
-            return response.json();
-          } else if (response["status"] === 401) {
-            message.error("You already voted!");
-          } else {
-            message.error("The election is closed!");
-          }
-        })
-        .then((result) => {
-          if (result !== undefined) {
-            navigate("/candidates", { state: { id: result } });
-          }
-        });
+    activateBrowserWallet(onError, true).then(() => {
+      navigate("/candidates");
+    });
+  }
+
+  const onError = (error: Error) => {
+    console.log(error.message)
   }
 
   return (

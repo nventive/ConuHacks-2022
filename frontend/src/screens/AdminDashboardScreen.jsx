@@ -7,28 +7,40 @@ import "./AdminDashboard.css";
 import logoutIcon from "../images/logout.png";
 import stop from "../images/stop.png";
 import result from "../images/result.png";
+import { utils } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
+import { Mainnet, useEtherBalance, useEthers, Config, useContractCall, useContractFunction} from '@usedapp/core'
+import abi from "../smartContract/abi.json"
+import { address } from "../smartContract/address"
+
 export const AdminDashboardScreen = () => {
   let navigate = useNavigate();
+  const wethInterface = new utils.Interface(abi)
+  const wethContractAddress = address
+  const contract = new Contract(wethContractAddress, wethInterface)
+  const { send } = useContractFunction(contract, 'endElection')
 
   function logout() {
     navigate("/");
   }
 
   function endHandle() {
-    fetch(url + "/end", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    }).then((response) => {
-      if (response["status"] === 201 || response["status"] === 200) {
-        message.success("Election Ended!");
-        return response.json();
-      } else {
-        message.error("Something went wrong!");
-      }
-    });
+    send();
+
+    // fetch(url + "/end", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json, text/plain",
+    //     "Content-Type": "application/json;charset=UTF-8",
+    //   },
+    // }).then((response) => {
+    //   if (response["status"] === 201 || response["status"] === 200) {
+    //     message.success("Election Ended!");
+    //     return response.json();
+    //   } else {
+    //     message.error("Something went wrong!");
+    //   }
+    // });
   }
 
   function viewResults() {
