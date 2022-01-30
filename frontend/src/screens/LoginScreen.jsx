@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "antd";
 import { UserOutlined } from "@ant-design/icons";
@@ -12,7 +12,26 @@ import { formatEther } from '@ethersproject/units'
 import middleware from "../middleware/Middleware";
 import detectEthereumProvider from '@metamask/detect-provider';
 
+
+
+
 export const LoginScreen = () => {
+  const [loaded, setCount] = useState(0);
+  if (window.ethereum) {
+    handleEthereum();
+  } else {
+    window.addEventListener('ethereum#initialized', handleEthereum, { once: true, });
+    setTimeout(handleEthereum, 3000);
+  }
+  function handleEthereum() {
+    const { ethereum } = window;
+    if (ethereum && ethereum.isMetaMask) {
+      setTimeout(setCount(2),3000);
+      //has metamask
+    } else {//doesnt have metamask
+      setCount(1);
+    }
+  }
   const [id, setID] = useState("");
   const { activateBrowserWallet, account } = useEthers()
 
@@ -68,32 +87,15 @@ export const LoginScreen = () => {
               prefix={<UserOutlined />}
             />
             <br />
-             <Button id="btn" onClick={() => { activateBrowserWallet(); middleware.setAccount(account) }} type="primary">
+            {loaded === 2 && <Button id="login" onClick={() => { activateBrowserWallet(); middleware.setAccount(account) }} type="primary">
               Sign in with Metamask
-            </Button>
+            </Button>}{loaded === 1 && <Button onClick={()=> window.open("https://metamask.io/download/", "_blank")}>Download
+            </Button>}
           </div>
         </div>
       </div>
     </>
   );
 };
-if (window.ethereum) {
-  handleEthereum();
-} else {
-  window.addEventListener('ethereum#initialized', handleEthereum, { once: true, });
-  setTimeout(handleEthereum, 3000);
-}
-function handleEthereum() {
-  const { ethereum } = window;
-  if (ethereum && ethereum.isMetaMask) {
-    document.getElementById("btn").style.color="green";
-    //document.getElementById("btn").onclick=function(){activateBrowserWallet(); middleware.setAccount(account) };
-    document.getElementById("btn").type="primary";              
-    //has metamask
-  } else {//doesnt have metamask
-    //btn.innerHTML="download";
-  }
-}
-
 
 export default LoginScreen;
