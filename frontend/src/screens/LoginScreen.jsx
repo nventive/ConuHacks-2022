@@ -15,25 +15,21 @@ import middleware from "../middleware/Middleware";
 import detectEthereumProvider from '@metamask/detect-provider';
 
 
+function useCheckMetamask() {
+  const [loaded, setLoaded] = useState(false);
 
+  useEffect(() => {
+    if (typeof web3 !== 'undefined') {
+      setLoaded(true);
+    }
+  }, [loaded]);
+
+  return  loaded;
+}
 
 export const LoginScreen = () => {
-  const [loaded, setCount] = useState(0);
-  if (window.ethereum) {
-    handleEthereum();
-  } else {
-    window.addEventListener('ethereum#initialized', handleEthereum, { once: true, });
-    setTimeout(handleEthereum, 2000);
-  }
-  function handleEthereum() {
-    const { ethereum } = window;
-    if (ethereum && ethereum.isMetaMask) {
-      setTimeout(setCount(2),2000);
-      //has metamask
-    } else {//doesnt have metamask
-      setCount(1);
-    }
-  }
+  const metamask = useCheckMetamask();
+
   const [id, setID] = useState("");
   const { activateBrowserWallet, account } = useEthers()
 
@@ -48,58 +44,58 @@ export const LoginScreen = () => {
       },
       body: JSON.stringify({ id }),
     })
-      .then((response) => {
-        console.log(response);
-        if (response["status"] === 201 || response["status"] === 200) {
-          message.success("Logged in successfully!");
-          return response.json();
-        } else if (response["status"] === 401) {
-          message.error("You already voted!");
-        } else {
-          message.error("The election is closed!");
-        }
-      })
-      .then((result) => {
-        if (result !== undefined) {
-          navigate("/candidates", { state: { id: result } });
-        }
-      });
+        .then((response) => {
+          console.log(response);
+          if (response["status"] === 201 || response["status"] === 200) {
+            message.success("Logged in successfully!");
+            return response.json();
+          } else if (response["status"] === 401) {
+            message.error("You already voted!");
+          } else {
+            message.error("The election is closed!");
+          }
+        })
+        .then((result) => {
+          if (result !== undefined) {
+            navigate("/candidates", { state: { id: result } });
+          }
+        });
   }
 
   return (
-    <>
-      <div className="candidates__ctr place__center" style={{ backgroundImage: `url(${background})` }}>
+      <>
+        <div className="candidates__ctr place__center" style={{ backgroundImage: `url(${background})` }}>
 
-        <div className="candidates__header top__fix">
-          <section class="layout1">
-            <div></div>
-            <div>
-              <img className="" src={nventiveLogo} alt="logo" width="60" height="60" ></img>
+          <div className="candidates__header top__fix">
+            <section class="layout1">
+              <div></div>
+              <div>
+                <img className="" src={nventiveLogo} alt="logo" width="60" height="60" ></img>
+              </div>
+              <div>
+                <h1>nventive decentralized voting system</h1>
+              </div>
+              <div></div>
+            </section>
+          </div>
+
+          <div className="_center">
+            <div className="form__ctr" style={{ height: "400px" }}>
+
+              {metamask && <h2 className="color1">Sign in with Metamask</h2>}
+              {!metamask && <h2 className="color1">Download</h2>}
+              <br />
+              {metamask && <button className="color2" onClick={() => { activateBrowserWallet(); middleware.setAccount(account) } } type="primary">
+                <img src={deathstar} className="color3" alt="click here"  width="240" height="240" />
+              </button>}
+              {!metamask && <button className="color2" onClick={()=> window.open("https://metamask.io/download/", "_blank")}>
+                <img src={deathstar} className="color3" alt="click here"  width="240" height="240" />
+              </button>}
+
             </div>
-            <div>
-              <h1>nventive decentralized voting system</h1>
-            </div>
-            <div></div>
-          </section>
-        </div>
-
-        <div className="_center">
-          <div className="form__ctr" style={{ height: "400px" }}>
-            
-            {loaded === 2 && <h2 className="color1">Sign in with Metamask</h2>}
-            {loaded ===1 && <h2 className="color1">Download</h2>}
-            <br />
-            {loaded === 2 && <button className="color2" onClick={() => { activateBrowserWallet(); middleware.setAccount(account) } } type="primary">
-            <img src={deathstar} className="color3" alt="click here"  width="240" height="240" />
-            </button>}
-            {loaded === 1 && <button className="color2" onClick={()=> window.open("https://metamask.io/download/", "_blank")}>
-            <img src={deathstar} className="color3" alt="click here"  width="240" height="240" />
-            </button>}
-
           </div>
         </div>
-      </div>
-    </>
+      </>
   );
 };
 
