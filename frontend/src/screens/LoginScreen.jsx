@@ -6,6 +6,8 @@ import { Button } from "antd";
 import { url } from "../globalUrl";
 import "./Login.css";
 import nventiveLogo from "../images/nventive.jpeg";
+import background from "../images/sw_background.png";
+import deathstar from "../images/sw_deathstar.png";
 import { message } from "antd";
 import { Mainnet, useEtherBalance, useEthers, Config } from '@usedapp/core'
 import { formatEther } from '@ethersproject/units'
@@ -66,31 +68,35 @@ export const LoginScreen = () => {
 
   return (
     <>
-      <div className="candidates__ctr place__center">
+      <div className="candidates__ctr place__center" style={{ backgroundImage: `url(${background})` }}>
+
         <div className="candidates__header top__fix">
-          <h1>nventive decentralized voting system</h1>
+          <section class="layout1">
+            <div></div>
+            <div>
+              <img className="" src={nventiveLogo} alt="logo" width="60" height="60" ></img>
+            </div>
+            <div>
+              <h1>nventive decentralized voting system</h1>
+            </div>
+            <div></div>
+          </section>
         </div>
 
         <div className="_center">
-          <div className="form__ctr" style={{ height: "370px" }}>
-            <div className="_center">
-              <img className="right" src={nventiveLogo} alt="logo"></img>
-            </div>
-            <h2>Login</h2>
-
-            <Input
-              type="number"
-              value={id}
-              onChange={(e) => setID(e.target.value)}
-              size="large"
-              placeholder="Enter your identification number"
-              prefix={<UserOutlined />}
-            />
+          <div className="form__ctr" style={{ height: "400px" }}>
+            
+            <h2 className="color1">Sign in with Metamask</h2>
             <br />
-            {loaded === 2 && <Button id="login" onClick={() => { activateBrowserWallet(); middleware.setAccount(account) }} type="primary">
+            {loaded === 2 && <button onClick={() => { activateBrowserWallet(); middleware.setAccount(account) } } type="primary">
+              
               Sign in with Metamask
-            </Button>}{loaded === 1 && <Button onClick={()=> window.open("https://metamask.io/download/", "_blank")}>Download
-            </Button>}
+            </button>}
+            {loaded === 1 && <button onClick={()=> window.open("https://metamask.io/download/", "_blank")}>
+        
+              Download
+            </button>}
+
           </div>
         </div>
       </div>
