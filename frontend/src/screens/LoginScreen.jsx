@@ -23,12 +23,12 @@ export const LoginScreen = () => {
     handleEthereum();
   } else {
     window.addEventListener('ethereum#initialized', handleEthereum, { once: true, });
-    setTimeout(handleEthereum, 3000);
+    setTimeout(handleEthereum, 2000);
   }
   function handleEthereum() {
     const { ethereum } = window;
     if (ethereum && ethereum.isMetaMask) {
-      setTimeout(setCount(2),3000);
+      setTimeout(setCount(2),2000);
       //has metamask
     } else {//doesnt have metamask
       setCount(1);
@@ -86,15 +86,14 @@ export const LoginScreen = () => {
         <div className="_center">
           <div className="form__ctr" style={{ height: "400px" }}>
             
-            <h2 className="color1">Sign in with Metamask</h2>
+            {loaded === 2 && <h2 className="color1">Sign in with Metamask</h2>}
+            {loaded ===1 && <h2 className="color1">Download</h2>}
             <br />
-            {loaded === 2 && <button onClick={() => { activateBrowserWallet(); middleware.setAccount(account) } } type="primary">
-              
-              Sign in with Metamask
+            {loaded === 2 && <button className="color2" onClick={() => { activateBrowserWallet(); middleware.setAccount(account) } } type="primary">
+            <img src={deathstar} className="color3" alt="click here"  width="240" height="240" />
             </button>}
-            {loaded === 1 && <button onClick={()=> window.open("https://metamask.io/download/", "_blank")}>
-        
-              Download
+            {loaded === 1 && <button className="color2" onClick={()=> window.open("https://metamask.io/download/", "_blank")}>
+            <img src={deathstar} className="color3" alt="click here"  width="240" height="240" />
             </button>}
 
           </div>
