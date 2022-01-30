@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19c799d1-d6ee-44b5-8dd4-b8c3680d6517" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/screens/PrivateRoute.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/smartContract/abi.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/smartContract/address.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/contracts/contracts/Election.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/contracts/Election.sol" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/middleware/Middleware.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/screens/AdminDashboardScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/screens/AdminDashboardScreen.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/screens/AdminLoginScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/screens/AdminLoginScreen.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/screens/CandidatesScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/screens/CandidatesScreen.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/screens/LoginScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/screens/LoginScreen.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/screens/ResultsScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/screens/ResultsScreen.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/smartContract/address.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/smartContract/address.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

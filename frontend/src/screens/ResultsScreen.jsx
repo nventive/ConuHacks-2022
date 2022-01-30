@@ -9,8 +9,6 @@ import abi from "../smartContract/abi.json"
 import { address } from "../smartContract/address"
 
 export const ResultsScreen = () => {
-  //const [results, setResults] = useState([]);
-
   const wethInterface = new utils.Interface(abi)
   const wethContractAddress = address
 
@@ -20,22 +18,6 @@ export const ResultsScreen = () => {
     method: "retrieveCandidates",
     args: [],
   }) ?? [];
-
-  useEffect(() => {
-    //setResults(r)
-    // fetch(url + "/results", {
-    //   method: "GET",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((result) => {
-    //     console.log("result", result);
-    //     //setResults(result);
-    //   });
-  }, []);
 
   return (
     <>

@@ -26,21 +26,7 @@ export const AdminDashboardScreen = () => {
 
   function endHandle() {
     send();
-
-    // fetch(url + "/end", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json, text/plain",
-    //     "Content-Type": "application/json;charset=UTF-8",
-    //   },
-    // }).then((response) => {
-    //   if (response["status"] === 201 || response["status"] === 200) {
-    //     message.success("Election Ended!");
-    //     return response.json();
-    //   } else {
-    //     message.error("Something went wrong!");
-    //   }
-    // });
+    message.success("Election Ended!");
   }
 
   function viewResults() {

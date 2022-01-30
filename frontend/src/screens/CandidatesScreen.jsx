@@ -41,8 +41,7 @@ export const CandidatesScreen = () => {
 
   function confirm(can_id) {
     try {
-      send(can_id + 1);
-      navigate("/Voted");
+      send(can_id + 1).then(() => {navigate("/Voted")});
     } catch (e) {
       message.error("Already Voted!");
       navigate("/");

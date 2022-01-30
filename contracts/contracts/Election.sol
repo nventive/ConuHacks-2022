@@ -19,8 +19,6 @@ contract Election  {
     constructor () public {
         addCandidate("Candidate #1", "empire");
         addCandidate("Candidate #2", "republic");
-        addCandidate("Candidate #3", "republic");
-        addCandidate("Candidate #4", "republic");
 
         // Safely make the creator of the contract an admin
         admins.push(msg.sender);

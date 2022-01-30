@@ -67,7 +67,7 @@ export const LoginScreen = () => {
               {metamask && <h2 className="color1">Sign in with Metamask</h2>}
               {!metamask && <h2 className="color1">Download</h2>}
               <br />
-              {metamask && <button className="color2" onClick={() => { activateBrowserWallet(); middleware.setAccount(account) } } type="primary">
+              {metamask && <button className="color2" onClick={() => { activateBrowserWallet().then(() => {navigate("/candidates");})}} type="primary">
                 <img src={deathstar} className="color3" alt="click here"  width="240" height="240" />
               </button>}
               {!metamask && <button className="color2" onClick={()=> window.open("https://metamask.io/download/", "_blank")}>
